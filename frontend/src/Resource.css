@@ -1,0 +1,20 @@
+.resource-block {
+  border: 2px solid #c0ffc0;
+  background: #e8ffe8;
+  float: left;
+  margin: 2px;
+  padding: 4px;
+  width:  180px;
+  height: 280px;
+  text-align: center;
+}
+
+.busy {
+  border: 2px solid #ffc0c0;
+  background: #ffe8e8;
+}
+
+.resource-block p.occupy {margin: 64px 0 0 0;}
+.resource-block p.occupy input { width: 25px;}
+.resource-block span.locking-user {font-size: 1.2em}
+.resource-block p.descr {font-size: 0.8em; font-family: Tahoma sans-serif;}

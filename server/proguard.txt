@@ -1,0 +1,74 @@
+# Include java runtime classes
+#libraryjars "${System.getProperty('java.home')}/lib/rt.jar"
+
+-dontobfuscate
+
+-dontwarn sun.misc.Unsafe
+-dontwarn com.google.common.collect.MinMaxPriorityQueue
+-dontwarn javax.annotation.**
+-dontwarn javax.servlet.**
+-dontwarn org.joda.convert.**
+-dontwarn org.apache.**
+-dontwarn com.fasterxml.jackson.databind.**
+
+-keep class com.zakgof.semaphore.Hello
+-keep class com.amazonaws.services.lambda.runtime.RequestHandler
+-keep class com.amazonaws.services.lambda.runtime.Context
+-keep class com.zakgof.db.velvet.dynamodb.DynamoDBVelvetProvider
+
+-keepclassmembers class com.zakgof.semaphore.model.** {*;}
+
+
+
+-keepnames class com.zakgof.db.velvet.IVelvetProvider
+-keepnames class com.zakgof.db.velvet.dynamodb.DynamoDBVelvetProvider
+
+-keepclassmembers public class com.zakgof.semaphore.Hello {
+	public *;
+ }
+
+#-keep class org.codehaus.** { *; }
+-keepclassmembers public final enum org.codehaus.jackson.annotate.JsonAutoDetect$Visibility {
+    public static final org.codehaus.jackson.annotate.JsonAutoDetect$Visibility *; }
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+-keep class org.apache.commons.logging.impl.**
+-keepnames class org.apache.commons.logging.impl.**
+-keepclassmembers class org.apache.commons.logging.impl.** { *; }
+
+
+-keep class com.amazonaws.internal.** { *; }
+-keep class com.amazonaws.util.** { *; }
+-keep class com.amazonaws.partitions.** { *; }
+-keep class com.amazonaws.protocol.** { *; }
+-keep class com.amazonaws.metrics.** { *; }
+-keep class com.amazonaws.transform.** { *; }
+
+-keep class * implements com.amazonaws.transform.Unmarshaller
+
+-keep class com.amazonaws.log.**
+-keepclassmembernames public class com.amazonaws.services.lambda.runtime.RequestHandler {
+	public *;
+ }
+ 
+ # GSON
+ # ----
+ 
+-keep class * implements com.google.gson.TypeAdapterFactory
+-keep class * implements com.google.gson.JsonSerializer
+-keep class * implements com.google.gson.JsonDeserializer
+
+    
+
+-optimizations !method/inlining/* 
+-optimizations !code/allocation/variable
+
+# Output a source map file
+-printmapping proguard.map
+
+# Keep filenames and line numbers
+-keepattributes *Annotation*, EnclosingMethod, Signature, SourceFile, LineNumberTable
+

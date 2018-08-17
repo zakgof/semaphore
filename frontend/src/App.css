@@ -1,0 +1,4 @@
+.status { height: 42px; padding: 6px;  }
+.clear {clear: both;}
+.login {float: right; width: 320px; margin: 4px; text-align: right}
+.admin {float: none; clear: both; margin: 10px}

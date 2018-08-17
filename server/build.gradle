@@ -1,0 +1,50 @@
+buildscript {
+    repositories {
+        flatDir dirs: 'D:/Portable/proguard-603/lib'
+    }
+    dependencies {
+        classpath ':proguard:'
+    }
+}
+
+
+plugins {
+    id 'io.franzbecker.gradle-lombok' version '1.14'
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
+}
+
+dependencies {
+    compile (
+        'com.amazonaws:aws-lambda-java-core:1.1.0',
+        'com.amazonaws:aws-lambda-java-events:1.1.0',
+        'com.github.zakgof:velvetdb-dynamodb:0.6.0-SNAPSHOT',
+        'com.google.code.gson:gson:2.8.5',
+        'io.jsonwebtoken:jjwt-api:0.10.4',
+        'io.jsonwebtoken:jjwt-jackson:0.10.4',        
+        'com.mashape.unirest:unirest-java:1.4.9'
+    )     
+    runtime 'io.jsonwebtoken:jjwt-impl:0.10.4'
+}
+
+task proguard(type: proguard.gradle.ProGuardTask) {
+    configuration 'proguard.txt'
+    injars 'build/libs/fat.jar'
+    outjars 'build/libs/slim.jar'
+    libraryjars "${System.getProperty('java.home')}/lib/rt.jar"
+    libraryjars "${System.getProperty('java.home')}/lib/jce.jar"
+}
+
+task fatJar(type: Jar) {
+    baseName = 'fat'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+proguard.dependsOn fatJar
